@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: field-slicer-1-deployment
+  labels:
+    app: field-slicer-1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+        app: field-slicer-1
+  template:
+    metadata:
+      labels:
+        app: field-slicer-1
+    spec:
+      volumes:
+        - name: field-slicer-1-pv-storage
+          persistentVolumeClaim:
+            claimName: pvc-field-slicer-1
+      containers:
+      - name: field-slicer-1
+        image: magland/field-slicer:0.1.8
+        imagePullPolicy: Always
+        env:
+        - name: HOME
+          value: /tmp
+        - name: KACHERY_P2P_START_DAEMON_OPTS
+          value: --label xxxxxx --noudp --static-config xxxxxx
+        - name: KACHERY_STORAGE_DIR
+          value: /data/kachery-storage
+        ports:
+        - containerPort: 14101
+        volumeMounts:
+          - mountPath: "/data"
+            name: field-slicer-1-pv-storage

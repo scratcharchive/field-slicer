@@ -1,12 +1,11 @@
-// This file was automatically generated. Do not edit directly. See devel/templates.
-
 import { createExtensionContext, LabboxProvider } from 'labbox';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import config from './config.json';
-import { FSPlugin } from './python/field_slicer/extensions/pluginInterface';
+import './index.css';
+import { {{ classPrefix }}Plugin } from './python/{{ projectNameUnderscore }}/extensions/pluginInterface';
 import registerExtensions from './registerExtensions';
 import reportWebVitals from './reportWebVitals';
 
@@ -16,7 +15,7 @@ const apiConfig = {
   baseFeedUrl: `http://${window.location.hostname}:${config.httpPort}/feed`
 }
 
-const extensionContext = createExtensionContext<FSPlugin>()
+const extensionContext = createExtensionContext<{{ classPrefix }}Plugin>()
 registerExtensions(extensionContext).then(() => {
   ReactDOM.render(
     // <React.StrictMode>

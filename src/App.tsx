@@ -1,25 +1,57 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { MuiThemeProvider } from '@material-ui/core';
+import { LabboxProviderContext, usePlugins } from 'labbox';
+import QueryString from 'querystring';
+import React, { useCallback, useContext, useMemo } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
+import { FSPlugin, MainWindowPlugin } from './python/field_slicer/extensions/pluginInterface';
+import { locationFromRoute, routeFromLocation, WorkspaceRoute, WorkspaceRouteAction, workspaceRouteReducer } from './python/field_slicer/extensions/pluginInterface/WorkspaceRoute';
+import theme from './python/field_slicer/extensions/theme';
 
 function App() {
+  const plugins = usePlugins<FSPlugin>()
+  const mainWindowPlugin = plugins.filter(p => (p.name === 'MainWindow'))[0] as any as MainWindowPlugin
+
+  const { serverInfo } = useContext(LabboxProviderContext)
+
+  const location = useLocation()
+  const history = useHistory()
+  const workspaceUri = useMemo(() => {
+    const query = QueryString.parse(location.search.slice(1));
+    const workspace = (query.workspace as string) || 'default'
+    const defaultFeedId = serverInfo?.defaultFeedId
+    const workspaceUri = workspace.startsWith('workspace://') ? workspace : (defaultFeedId ? `workspace://${defaultFeedId}/${workspace}` : undefined)
+    return workspaceUri
+  }, [location.search, serverInfo])
+
+  const workspaceRoute: WorkspaceRoute = useMemo(() => {
+    return routeFromLocation(location, serverInfo)
+  }, [location, serverInfo])
+
+  const workspaceRouteDispatch = useCallback(
+    (a: WorkspaceRouteAction) => {
+      const newRoute: WorkspaceRoute = workspaceRouteReducer(workspaceRoute, a)
+      const newLocation = locationFromRoute(newRoute)
+      if ((location.pathname !== newLocation.pathname) || (location.search !== newLocation.search)) {
+        history.push({...location, ...newLocation})
+      }
+    },
+    [workspaceRoute, history, location]
+  )
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <MuiThemeProvider theme={theme}>
+      <div className="App">
+        <header className="App-header">
+          {
+            mainWindowPlugin ? (
+              <mainWindowPlugin.component
+                {...{workspaceUri, workspaceRoute, workspaceRouteDispatch}}
+              />
+            ) : (<div>No main window plugin</div>)
+          }
+        </header>
+      </div>
+    </MuiThemeProvider>
   );
 }
 
