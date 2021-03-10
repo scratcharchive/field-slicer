@@ -30,7 +30,7 @@ function useWindowDimensions() {
 
 const MainWindow: FunctionComponent<MainWindowProps> = ({ workspaceUri, workspaceRoute, workspaceRouteDispatch }) => {
     const { width, height } = useWindowDimensions()
-    const appBarHeight = 52 // hard-coded for now - must agree with theme
+    const appBarHeight = 62 // hard-coded for now - must agree with theme
     const H = height - appBarHeight - 2
     const hMargin = 0
     const W = width - hMargin * 2 - 2
@@ -42,7 +42,8 @@ const MainWindow: FunctionComponent<MainWindowProps> = ({ workspaceUri, workspac
 
     const [workspace, workspaceDispatch2] = useReducer(workspaceReducer, useMemo(() => ({fieldModels: []}), []))
     const handleWorkspaceSubfeedMessages = useCallback((messages: any[]) => {
-        messages.filter(msg => msg.action).forEach(msg => workspaceDispatch2(msg.action))
+        console.log('--- workspace subfeed messages', messages)
+        messages.forEach(msg => workspaceDispatch2(msg))
     }, [])
 
     const {feedUri, workspaceName} = parseWorkspaceUri(workspaceUri)

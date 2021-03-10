@@ -26,11 +26,4 @@ const workspaceReducer = (s: WorkspaceState, a: WorkspaceAction): WorkspaceState
 
 export type WorkspaceDispatch = (a: WorkspaceAction) => void
 
-const intersection = (a: number[], b: number[]) => (
-    a.filter(x => (b.includes(x)))
-)
-const union = (a: number[], b: number[]) => (
-    [...a, ...b.filter(x => (!a.includes(x)))].sort()
-)
-
 export default workspaceReducer

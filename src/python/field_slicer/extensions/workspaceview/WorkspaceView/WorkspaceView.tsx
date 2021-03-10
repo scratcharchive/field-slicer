@@ -1,5 +1,7 @@
 import React, { FunctionComponent, useCallback } from 'react';
 import { WorkspaceViewProps } from '../../pluginInterface/WorkspaceViewPlugin';
+import FieldModelsView from './FieldModelsView';
+import FieldModelView from './FieldModelView';
 
 export interface LocationInterface {
   pathname: string
@@ -19,9 +21,19 @@ const WorkspaceView: FunctionComponent<WorkspaceViewProps> = ({ workspace, works
     })
   }, [workspaceDispatch])
 
+  const handleClickFieldModel = useCallback((fieldModelId: string) => {
+    workspaceRouteDispatch({
+      type: 'gotoFieldModelPage',
+      fieldModelId
+    })
+  }, [workspaceRouteDispatch])
+
   switch (workspaceRoute.page) {
     case 'fieldModels': return (
-      <div>Field models</div>
+      <FieldModelsView fieldModels={workspace.fieldModels} onFieldModelClicked={handleClickFieldModel} onDeleteFieldModels={handleDeleteFieldModels} />
+    )
+    case 'fieldModel': return (
+      <FieldModelView fieldModel={workspace.fieldModels.filter(fm => (fm.fieldModelId === workspaceRoute.fieldModelId))[0]} workspaceRouteDispatch={workspaceRouteDispatch} />
     )
   }
 }

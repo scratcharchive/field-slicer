@@ -1,20 +1,29 @@
 import { ServerInfo } from 'labbox/lib/LabboxProvider'
 import QueryString from 'querystring'
 
-type Page = 'fieldModels'
+type Page = 'fieldModels' | 'fieldModel'
 export const isWorkspacePage = (x: string): x is Page => {
-    return ['fieldModels'].includes(x)
+    return ['fieldModels', 'fieldModel'].includes(x)
 }
 
 type WorkspaceFieldModelsRoute = {
-    page: 'fieldModels',
+    page: 'fieldModels'
     workspaceUri?: string
 }
-export type WorkspaceRoute = WorkspaceFieldModelsRoute
+type WorkspaceFieldModelRoute = {
+    page: 'fieldModel'
+    fieldModelId: string
+    workspaceUri?: string
+}
+export type WorkspaceRoute = WorkspaceFieldModelsRoute | WorkspaceFieldModelRoute
 type GotoFieldModelsPageAction = {
     type: 'gotoFieldModelsPage'
 }
-export type WorkspaceRouteAction = GotoFieldModelsPageAction
+type GotoFieldModelPageAction = {
+    type: 'gotoFieldModelPage'
+    fieldModelId: string
+}
+export type WorkspaceRouteAction = GotoFieldModelsPageAction | GotoFieldModelPageAction
 export type WorkspaceRouteDispatch = (a: WorkspaceRouteAction) => void
 
 export interface LocationInterface {
@@ -42,6 +51,11 @@ export const routeFromLocation = (location: LocationInterface, serverInfo: Serve
             workspaceUri,
             page
         }
+        case 'fieldModel': return {
+            workspaceUri,
+            page,
+            fieldModelId: pathList[2]
+        }
         default: return {
             workspaceUri,
             page: 'fieldModels'
@@ -49,15 +63,28 @@ export const routeFromLocation = (location: LocationInterface, serverInfo: Serve
     }
 }
 
+const qs = (params: {[key: string]: any}) => {
+    const list = []
+    for (let k in params) {
+        list.push(`${k}=${params[k]}`)
+    }
+    return list.join('&')
+}
+
 export const locationFromRoute = (route: WorkspaceRoute) => {
     const queryParams: { [key: string]: string } = {}
     if (route.workspaceUri) {
         queryParams['workspace'] = route.workspaceUri
     }
+    const search = qs(queryParams)
     switch (route.page) {
         case 'fieldModels': return {
             pathname: `/`,
-            search: queryString(queryParams)
+            search
+        }
+        case 'fieldModel': return {
+            pathname: `/fieldModel/${route.fieldModelId}`,
+            search
         }
     }
 }
@@ -79,6 +106,11 @@ export const workspaceRouteReducer = (s: WorkspaceRoute, a: WorkspaceRouteAction
             page: 'fieldModels',
             workspaceUri: s.workspaceUri
         }; break;
+        case 'gotoFieldModelPage': newRoute = {
+            page: 'fieldModel',
+            fieldModelId: a.fieldModelId,
+            workspaceUri: s.workspaceUri
+        }
     }
     return newRoute
 }

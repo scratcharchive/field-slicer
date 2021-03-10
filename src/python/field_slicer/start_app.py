@@ -26,6 +26,7 @@ def start_app(*, api_websocket: bool=False, api_http: bool=False, client_dev: bo
         s = hi.ShellScript(f'''
         #!/bin/bash
 
+        export LABBOX_DEFAULT_FEED_NAME=field-slicer-default
         export LABBOX_EXTENSIONS_DIR={thisdir}/extensions
         export LABBOX_WEBSOCKET_PORT=14102
 
