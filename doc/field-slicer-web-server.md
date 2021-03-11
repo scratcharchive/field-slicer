@@ -13,10 +13,16 @@ conda create -n field-slicer python=3.8
 
 After activating the new environment (`conda activate field-slicer`), install the following prerequisite packages:
 
-```
+```bash
 conda install -c conda-forge nodejs
 npm install -g serve
 pip install field-slicer
+```
+
+**Important:** **On macOS** you may need to use the following to get a recent version of nodejs:
+
+```bash
+conda install nodejs -c conda-forge --repodata-fn=repodata.json
 ```
 
 Choose an existing directory where temporary kachery files will be stored and set the KACHERY_STORAGE_DIR environment variable:
