@@ -11,8 +11,8 @@ SHELL ["conda", "run", "-n", "myenv", "/bin/bash", "-c"]
 RUN conda install -c conda-forge nodejs
 RUN npm install -g serve
 
-COPY ./dist/field-slicer-0.1.9.tar.gz /field-slicer-0.1.9.tar.gz
-RUN pip install /field-slicer-0.1.9.tar.gz
+COPY ./dist/field-slicer-0.1.11.tar.gz /field-slicer-0.1.11.tar.gz
+RUN pip install /field-slicer-0.1.11.tar.gz
 
 # Make sure the environment is activated and field-slicer is installed
 RUN echo "Make sure field-slicer is installed:"

@@ -19,7 +19,7 @@ npm install -g serve
 pip install field-slicer
 ```
 
-**Important:** **On macOS** you may need to use the following to get a recent version of nodejs:
+**Important:** On macOS you may need to use the following to get a recent version of nodejs:
 
 ```bash
 conda install nodejs -c conda-forge --repodata-fn=repodata.json

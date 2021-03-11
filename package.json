@@ -1,6 +1,6 @@
 {
   "name": "field-slicer",
-  "version": "0.1.9",
+  "version": "0.1.11",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.3",
