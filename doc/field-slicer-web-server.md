@@ -19,9 +19,11 @@ npm install -g serve
 pip install field-slicer
 ```
 
-Choose a directory where temporary kachery files will be stored and set the KACHERY_STORAGE_DIR environment variable:
+Choose an existing directory where temporary kachery files will be stored and set the KACHERY_STORAGE_DIR environment variable:
 
 ```
+# This should be the full path to an existing directory.
+# For example, you could use: $HOME/kachery-storage
 export KACHERY_STORAGE_DIR="<your-chosen-tmp-file-directory>" 
 ```
 
