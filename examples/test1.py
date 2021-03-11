@@ -5,7 +5,6 @@ import field_slicer as fs
 
 def main():
     w = fs.load_workspace()
-    print(w.get_field_models())
     N1, N2, N3 = (100, 100, 30)
     data = np.zeros((3, N1, N2, N3), dtype=np.float32)
     for i1 in range(N1):
@@ -21,12 +20,10 @@ def main():
     transformation = np.array([
         [1/N1, 0, 0, 0],
         [0, 1/N2, 0, 0],
-        [0, 0, 1/N3, 0],
-        [0, 0, 0, 1],
+        [0, 0, 1/N3, 0]
     ])
-    f = fs.FieldModel(label='new test', data=data, components=['x', 'y', 'z'], transformation=transformation)
+    f = fs.FieldModel(label='test1', data=data, components=['x', 'y', 'z'], transformation=transformation)
     w.add_field_model(f)
-    print(w.get_field_models())
 
 if __name__ == '__main__':
     main()

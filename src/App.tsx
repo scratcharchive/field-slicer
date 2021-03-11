@@ -7,7 +7,7 @@ import { FSPlugin, MainWindowPlugin } from './python/field_slicer/extensions/plu
 import { locationFromRoute, routeFromLocation, WorkspaceRoute, WorkspaceRouteAction, workspaceRouteReducer } from './python/field_slicer/extensions/pluginInterface/WorkspaceRoute';
 import theme from './python/field_slicer/extensions/theme';
 
-function App() {
+function App({version}: {version: string}) {
   const plugins = usePlugins<FSPlugin>()
   const mainWindowPlugin = plugins.filter(p => (p.name === 'MainWindow'))[0] as any as MainWindowPlugin
 
@@ -45,7 +45,7 @@ function App() {
           {
             mainWindowPlugin ? (
               <mainWindowPlugin.component
-                {...{workspaceUri, workspaceRoute, workspaceRouteDispatch}}
+                {...{workspaceUri, workspaceRoute, workspaceRouteDispatch, version}}
               />
             ) : (<div>No main window plugin</div>)
           }
