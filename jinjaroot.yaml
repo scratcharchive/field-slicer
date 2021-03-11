@@ -1,0 +1,19 @@
+projectName: field-slicer
+projectNameUnderscore: field_slicer
+projectVersion: 0.1.8
+projectDescription:
+projectUrl: https://github.com/flatironinstitute/field-slicer
+projectAuthor: Jeremy Magland
+projectAuthorEmail: jmagland@flatironinstitute.org
+dockerUser: magland
+clientPort: 14101
+webSocketPort: 14102
+httpPort: 14103
+classPrefix: FS
+extensions:
+  -
+    name: mainwindow
+    relPath: mainwindow/mainwindow
+  -
+    name: workspaceview
+    relPath: workspaceview/workspaceview

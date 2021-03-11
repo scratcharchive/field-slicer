@@ -94,7 +94,6 @@ const createZeros3 = (n1: number, n2: number, n3: number): number[][][] => {
 const useSampleDataObjectSlices = (dataUri: string, slices: Slice[], componentIndices: number[]): ((number[][])[])[] | undefined => {
     // todo
     const {result, job} = useHitherJob('createjob_sample_data_object_slices', {data_uri: dataUri, slices: slices, component_indices: componentIndices}, {useClientCache: true})
-    console.log('-----', result, job)
     return result ? result as number[][][][] : undefined
 }
 

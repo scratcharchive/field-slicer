@@ -24,7 +24,7 @@ def main():
         [0, 0, 1/N3, 0],
         [0, 0, 0, 1],
     ])
-    f = fs.FieldModel(label='test2', data=data, components=['x', 'y', 'z'], transformation=transformation)
+    f = fs.FieldModel(label='new test', data=data, components=['x', 'y', 'z'], transformation=transformation)
     w.add_field_model(f)
     print(w.get_field_models())
 
