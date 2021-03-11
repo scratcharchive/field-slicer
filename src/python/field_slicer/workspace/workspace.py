@@ -2,7 +2,6 @@ import numpy as np
 from typing import List, Union
 import uuid
 import kachery_p2p as kp
-import spikeextractors as se
 
 def parse_workspace_uri(workspace_uri: str):
     if not workspace_uri.startswith('workspace://'):
