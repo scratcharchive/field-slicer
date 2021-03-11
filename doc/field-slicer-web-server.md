@@ -46,6 +46,8 @@ Ensure that these environment variables are set with each new terminal session b
 Open a new terminal and start a kachery-p2p daemon, selecting a `<node-label>` for display purposes:
 
 ```
+# Make sure you are in the conda environment created above
+# and that the KACHERY_STORAGE_DIR env variable is set
 kachery-p2p-start-daemon --label <node-label>
 ```
 
@@ -62,6 +64,7 @@ pip install --upgrade field-slicer
 Now run the field-slicer service:
 
 ```
+# First make sure you are in the conda environment
 field-slicer
 ```
 
