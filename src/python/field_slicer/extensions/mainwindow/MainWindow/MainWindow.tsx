@@ -42,7 +42,6 @@ const MainWindow: FunctionComponent<MainWindowProps> = ({ workspaceUri, workspac
 
     const [workspace, workspaceDispatch2] = useReducer(workspaceReducer, useMemo(() => ({fieldModels: []}), []))
     const handleWorkspaceSubfeedMessages = useCallback((messages: any[]) => {
-        console.log('--- workspace subfeed messages', messages)
         messages.forEach(msg => workspaceDispatch2(msg))
     }, [])
 

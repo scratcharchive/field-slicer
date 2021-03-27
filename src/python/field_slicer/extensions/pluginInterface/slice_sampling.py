@@ -1,6 +1,6 @@
 import numpy as np
 import hither as hi
-import kachery as ka
+import kachery_p2p as kp
 from numpy.lib.function_base import meshgrid
 from .serialize import serialize
 
@@ -16,7 +16,9 @@ def createjob_sample_data_object_slices(labbox, data_uri, slices, component_indi
 @hi.function('sample_data_object_slices', '0.1.0')
 @serialize
 def sample_data_object_slices(data_uri, slices, component_indices):
-    X = ka.load_npy(data_uri)
+    print('-------------------------------------------- x', data_uri)
+    X = kp.load_npy(data_uri)
+    print('-------------------------------------------- x', X.dtype, X[:, 0, 0, 0], X[:, 0, 0, 1])
     nx = slices[0]['nx']
     ny = slices[0]['ny']
     num_components = len(component_indices)
@@ -34,7 +36,7 @@ def sample_data_object_slices(data_uri, slices, component_indices):
                 # print(f'ix={ix}, nx={nx}, iy={iy}, ny={ny}, p={p}, x_ind={x_ind}, y_ind={y_ind}, z_ind={z_ind}, X.shape={X.shape}, val={X[:, x_ind, y_ind, z_ind]}')
                 if (0 <= x_ind) and (x_ind < X.shape[1]) and (0 <= y_ind) and (y_ind < X.shape[2]) and (0 <= z_ind) and (z_ind < X.shape[3]):
                     for c in range(num_components):
-                        A[ix, iy, c] = X[component_indices[c], x_ind, y_ind, z_ind]
+                        A[ix, iy, c] = np.abs(X[component_indices[c], x_ind, y_ind, z_ind])
         ret.append(A.tolist())
     # print(ret)
     return ret

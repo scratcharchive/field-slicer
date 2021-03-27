@@ -1,10 +1,11 @@
 projectName: field-slicer
 projectNameUnderscore: field_slicer
-projectVersion: 0.1.11
+projectVersion: 0.1.12-dev1
 projectDescription:
 projectUrl: https://github.com/flatironinstitute/field-slicer
 projectAuthor: Jeremy Magland
 projectAuthorEmail: jmagland@flatironinstitute.org
+pythonPackageDir: ./src/python
 dockerUser: magland
 clientPort: 14101
 webSocketPort: 14102

@@ -8,13 +8,13 @@ from pathlib import Path
 
 def generate_miniwasp_fields():
     # Define geometry and number of components
-    geom_fname = kp.load_file('sha1://fce1fb4c8637a36edb34669e1ac612700ce7151e/lens_r01.go3?manifest=b774b868edb7817c61bb7d7b59d0dc07e5634c13')
-    print(geom_fname)
+    geom_fname = kp.load_file('sha1://fce1fb4c8637a36edb34669e1ac612700ce7151e/lens_r01.go3', dest='./lens_r01.go3')
+    # geom_fname = './lens_r01.go3'
     n_components = 1
 
     # compute number of patches and points
     print('em_solver_wrap_mem')
-    npatches,npts = mw.em_solver_wrap_mem(geom_fname, n_components)
+    npatches,npts = mw.em_solver_wrap_mem(geom_fname + '?', n_components)
 
     # solve analytic test problem. Change icase=2 for plane wave
     # scattering problem
@@ -98,5 +98,8 @@ def generate_miniwasp_fields():
     #
     print('em_sol_exact')
     E_ex,H_ex = mw.em_sol_exact(geom_fname,dP,contrast_matrix,npts,omega,eps,direction,pol,targs)
+
+    E_ex = E_ex.reshape((3, nx, ny, nz))
+    H_ex = H_ex.reshape((3, nx, ny, nz))
 
     return E_ex, H_ex

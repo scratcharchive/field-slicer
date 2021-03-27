@@ -21,7 +21,7 @@ spec:
             claimName: pvc-field-slicer-1
       containers:
       - name: field-slicer-1
-        image: magland/field-slicer:0.1.11
+        image: magland/field-slicer:0.1.12-dev1
         imagePullPolicy: Always
         env:
         - name: HOME

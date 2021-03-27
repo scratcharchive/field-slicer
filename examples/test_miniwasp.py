@@ -7,7 +7,8 @@ from generate_miniwasp_fields import generate_miniwasp_fields
 def main():
     w = fs.load_workspace()
     H, E = generate_miniwasp_fields()
-    [nc, N1, N2, N3] = H
+    print(H.shape)
+    [nc, N1, N2, N3] = H.shape
     transformation = np.array([
         [1/N1, 0, 0, 0],
         [0, 1/N2, 0, 0],

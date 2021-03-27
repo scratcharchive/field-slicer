@@ -54,6 +54,7 @@ class Workspace:
             'components': field_model.get_components(),
             'dataUri': field_model.get_data_uri()
         }
+        print(x)
         workspace_subfeed = self._feed.get_subfeed(dict(workspaceName=self._workspace_name))
         _import_field_model(workspace_subfeed, x)
         self._field_models[field_model_id] = x
