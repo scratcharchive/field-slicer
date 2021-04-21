@@ -14,8 +14,8 @@ def main():
     import kachery_p2p as kp
     geom_uri = 'sha1://fce1fb4c8637a36edb34669e1ac612700ce7151e/lens_r01.go3'
     job_cache = hi.JobCache(feed_name='job-cache')
-    with hi.Config(use_container=True, show_console=True, job_cache=job_cache):
-        j: hi.Job = miniwasp_hither.run(geom_uri=geom_uri, omega=3.141592*2/300.0, ppw=20)
+    with hi.Config(use_container=True, show_console=True, job_cache=None):
+        j: hi.Job = miniwasp_hither.run(geom_uri=geom_uri, omega=3.141592*2/330.0, ppw=50)
         H, E = j.wait().return_value
         H = cast(np.ndarray, H)
         E = cast(np.ndarray, E)

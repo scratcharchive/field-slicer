@@ -17,6 +17,7 @@ def miniwasp_hither(geom_uri: str, n_components: float=1, omega: float=3.141592*
     n_components = 1
 
     # compute number of patches and points
+    # estimates how much memory is required
     print('em_solver_wrap_mem')
     npatches,npts = mw.em_solver_wrap_mem(geom_fname + '?', n_components)
 
@@ -27,12 +28,20 @@ def miniwasp_hither(geom_uri: str, n_components: float=1, omega: float=3.141592*
     # define direction and polarization of plane wave (needed
     # both for analytic test and scattering problem)
 
+    # direction = np.zeros(2)
+    # pol = np.zeros(2,dtype='complex')
+    # direction[0] = 0.0
+    # direction[1] = np.pi/2
+    # pol[0] = 3.0 
+    # pol[1] = 3.0
+
     direction = np.zeros(2)
     pol = np.zeros(2,dtype='complex')
-    direction[0] = 0.0
-    direction[1] = np.pi/2
-    pol[0] = 3.0 
-    pol[1] = 3.0
+    direction[0] = np.pi/2
+    direction[1] = 0
+    pol[0] = 1 
+    pol[1] = 0
+
 
     # Set translation and scaling of each component
     dP = np.zeros((4,n_components),order="F")
@@ -50,7 +59,7 @@ def miniwasp_hither(geom_uri: str, n_components: float=1, omega: float=3.141592*
 
 
     eps = 1e-3
-    # Get geometry info
+    # Get geometry info --- for determining target locations
     print('em_solver_open_geom')
     [npatches_vect,npts_vect,norders,ixyzs,iptype,srcvals,srccoefs,wts,
     sorted_vector,exposed_surfaces] = mw.em_solver_open_geom(geom_fname + '?', dP, npatches, npts, eps)
@@ -81,13 +90,16 @@ def miniwasp_hither(geom_uri: str, n_components: float=1, omega: float=3.141592*
 
     # determine grid spacing to get the correct 
     # resolution in each dimension of target grid
-    nx = int(np.ceil((xmax-xmin)*omega/2/np.pi*ppw))
-    ny = int(np.ceil((ymax-ymin)*omega/2/np.pi*ppw))
-    nz = int(np.ceil((zmax-zmin)*omega/2/np.pi*ppw))
+    # nx = int(np.ceil((xmax-xmin)*omega/2/np.pi*ppw))
+    # ny = int(np.ceil((ymax-ymin)*omega/2/np.pi*ppw))
+    # nz = int(np.ceil((zmax-zmin)*omega/2/np.pi*ppw))
+    nx = 200
+    ny = 200
+    nz = 60
 
-    xs = np.linspace(xmin+0.1*dx,xmax-0.1*dx,nx)
-    ys = np.linspace(ymin+0.1*dy,ymax-0.1*dy,ny)
-    zs = np.linspace(zmin+0.1*dz,zmax-0.1*dz,nz)
+    xs = np.linspace(xmin-0.45*dx,xmax+0.45*dx,nx)
+    ys = np.linspace(ymin-0.45*dy,ymax+0.45*dy,ny)
+    zs = np.linspace(zmin-0.45*dz,zmax+0.45*dz,nz)
     xx,yy,zz = np.meshgrid(xs,ys,zs)
 
     nt = nx*ny*nz
