@@ -17,13 +17,19 @@ class FieldModel:
         self._transformation = transformation
         self._data = data
         self._components = components
-    def get_label(self):
+    @property
+    def label(self):
         return self._label
-    def get_transformation(self):
+    @property
+    def transformation(self):
         return self._transformation
     def get_data_uri(self):
         return kp.store_npy(self._data)
-    def get_components(self):
+    @property
+    def data(self):
+        return self._data
+    @property
+    def components(self):
         return self._components
 
 class Workspace:
@@ -49,10 +55,11 @@ class Workspace:
             raise Exception(f'Duplicate field_model ID: {field_model_id}')
         x = {
             'fieldModelId': field_model_id,
-            'fieldModelLabel': field_model.get_label(),
-            'transformation': field_model.get_transformation().tolist(),
-            'components': field_model.get_components(),
-            'dataUri': field_model.get_data_uri()
+            'fieldModelLabel': field_model.label,
+            'transformation': field_model.transformation.tolist(),
+            'components': field_model.components,
+            'dataUri': field_model.get_data_uri(),
+            'dataShape': [d for d in field_model.data.shape]
         }
         print(x)
         workspace_subfeed = self._feed.get_subfeed(dict(workspaceName=self._workspace_name))

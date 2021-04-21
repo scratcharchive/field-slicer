@@ -1,6 +1,7 @@
-import { FunctionComponent, useMemo } from "react";
+import { FunctionComponent, useMemo, useState } from "react";
 import { FieldModel } from "../../pluginInterface";
 import { createSlice, Slice, useSampledSlices } from "../../pluginInterface/FieldModel";
+import ModeSelector from "./ModeSelector";
 import SampledSlicesView from "./SlicedVolumeView1/SampledSlicesView";
 
 type Props = {
@@ -26,15 +27,22 @@ type Props = {
 
 const FieldModelSlicesView: FunctionComponent<Props> = ({fieldModel}) => {
     const slices: Slice[] = useMemo(() => {
-        return [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9].map(z => (
-            createSlice({center: [0.5, 0.5, z], dx: [1/100, 0, 0], dy: [0, 1/100, 0], nx: 90, ny: 90})
+        return [-0.1, 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1].map(z => (
+            createSlice({center: [0.5, 0.5, z], dx: [1/100, 0, 0], dy: [0, 1/100, 0], nx: 150, ny: 150})
         ))
     }, [])
-    const sampledSlices = useSampledSlices(fieldModel, slices, fieldModel.components)
+    const [mode, setMode] = useState<'real' | 'imag' | 'abs'>('real')
+    const sampledSlices = useSampledSlices(fieldModel, slices, fieldModel.components, mode)
     return (
-        <SampledSlicesView
-            sampledSlices={sampledSlices}
-        />
+        <div>
+            <SampledSlicesView
+                sampledSlices={sampledSlices}
+            />
+            <ModeSelector
+                currentMode={mode}
+                onCurrentModeChanged={setMode}
+            />
+        </div>
     )
 }
 

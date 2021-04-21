@@ -13,11 +13,14 @@ const FieldModelView: FunctionComponent<Props> = ({fieldModel, workspaceRouteDis
         workspaceRouteDispatch({type: 'gotoFieldModelsPage'})
     }, [workspaceRouteDispatch])
     if (!fieldModel) return <div>No field model</div>
+    const ds = fieldModel.dataShape
     return (
         <div>
             <Hyperlink onClick={handleBack}>Back to field models</Hyperlink>
             <div>
                 <h3>Field model: {fieldModel.fieldModelId} ({fieldModel.fieldModelLabel})</h3>
+                <h4><pre>Data shape: {ds[1]} x {ds[2]} x {ds[3]}</pre></h4>
+                <h4><pre>Data uri: {fieldModel.dataUri}</pre></h4>
             </div>
             <FieldModelSlicesView
                 fieldModel={fieldModel}

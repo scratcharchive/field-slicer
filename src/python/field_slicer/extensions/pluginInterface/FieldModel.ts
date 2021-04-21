@@ -17,6 +17,7 @@ export type FieldModel = {
     transformation: AffineTransformation3D // Maps [0,1]^3 into the bounding box
     components: string[]
     dataUri: string // offers the ability to sample the cube
+    dataShape: number[]
 }
 
 export type Slice = {
@@ -100,19 +101,19 @@ const createZeros3 = (n1: number, n2: number, n3: number): number[][][] => {
     return ret
 }
 
-const useSampleDataObjectSlices = (dataUri: string, slices: Slice[], componentIndices: number[]): ((number[][])[])[] | undefined => {
+const useSampleDataObjectSlices = (dataUri: string, slices: Slice[], componentIndices: number[], mode: 'real' | 'imag' | 'abs'): ((number[][])[])[] | undefined => {
     // todo
-    const {result, job} = useHitherJob('createjob_sample_data_object_slices', {data_uri: dataUri, slices: slices, component_indices: componentIndices}, {useClientCache: true})
+    const {result, job} = useHitherJob('createjob_sample_data_object_slices', {data_uri: dataUri, slices: slices, component_indices: componentIndices, mode}, {useClientCache: true})
     return result ? result as number[][][][] : undefined
 }
 
-export const useSampledSlices = (fieldModel: FieldModel, slices: Slice[], components: string[]): SampledSlice[] | undefined => {
+export const useSampledSlices = (fieldModel: FieldModel, slices: Slice[], components: string[], mode: 'real' | 'imag' | 'abs'): SampledSlice[] | undefined => {
     const slicesTransformed = slices.map(s => ({
         ...s,
         transformation: multAffineTransformation3D(invAffineTransformation3D(fieldModel.transformation), s.transformation) // coordinates -> space -> coordinates
     }))
     const componentIndices = components.map(c => (fieldModel.components.indexOf(c)))
-    const sliceData: (number[][][])[] | undefined = useSampleDataObjectSlices(fieldModel.dataUri, slicesTransformed, componentIndices)
+    const sliceData: (number[][][])[] | undefined = useSampleDataObjectSlices(fieldModel.dataUri, slicesTransformed, componentIndices, mode)
     const sampledSlices: SampledSlice[] | undefined = sliceData ? (
         slices.map((s, ii) => ({
             slice: s,

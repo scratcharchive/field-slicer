@@ -1,14 +1,18 @@
 import os
+import hither2 as hi
 import kachery_p2p as kp
-import fmm3dbie
-import fmm3dpy
 import numpy as np
-import mwaspbie as mw
-from pathlib import Path
 
-def generate_miniwasp_fields():
-    # Define geometry and number of components
-    geom_fname = kp.load_file('sha1://fce1fb4c8637a36edb34669e1ac612700ce7151e/lens_r01.go3', dest='./lens_r01.go3')
+thisdir = os.path.dirname(os.path.realpath(__file__))
+@hi.function(
+    'miniwasp_hither', '0.1.0',
+    image=hi.DockerImageFromScript(name='magland/miniwasp', dockerfile=f'{thisdir}/docker-miniwasp/Dockerfile'),
+    kachery_support=True
+)
+def miniwasp_hither(geom_uri: str, n_components: float=1, omega: float=3.141592*2/300.0, ppw = 10):
+    import mwaspbie as mw
+    geom_fname = kp.load_file(geom_uri, dest='./lens_r01.go3')
+
     # geom_fname = './lens_r01.go3'
     n_components = 1
 
@@ -38,7 +42,7 @@ def generate_miniwasp_fields():
     # the units of prescribed geometry
 
     # currently set to wave length of green light*6 (for faster run time)
-    omega = np.pi*2/300.0
+    # omega = np.pi*2/300.0
 
     # set material parameters on either side of each component
     contrast_matrix = np.zeros((4,n_components),order="F",dtype="complex")
@@ -49,14 +53,13 @@ def generate_miniwasp_fields():
     # Get geometry info
     print('em_solver_open_geom')
     [npatches_vect,npts_vect,norders,ixyzs,iptype,srcvals,srccoefs,wts,
-    sorted_vector,exposed_surfaces] = mw.em_solver_open_geom(geom_fname,dP,npatches,npts,eps)
-
+    sorted_vector,exposed_surfaces] = mw.em_solver_open_geom(geom_fname + '?', dP, npatches, npts, eps)
 
     #
     #  Set points per wavelength in each direction 
     #  for target grid
     #
-    ppw = 5 * 2
+    # ppw = 5 * 2
 
 
     #
@@ -97,9 +100,10 @@ def generate_miniwasp_fields():
     # Compute analytic solution at targets
     #
     print('em_sol_exact')
-    E_ex,H_ex = mw.em_sol_exact(geom_fname,dP,contrast_matrix,npts,omega,eps,direction,pol,targs)
+    E_ex,H_ex = mw.em_sol_exact(geom_fname + '?', dP, contrast_matrix, npts, omega, eps, direction, pol, targs)
 
     E_ex = E_ex.reshape((3, nx, ny, nz))
     H_ex = H_ex.reshape((3, nx, ny, nz))
 
+    # return E_ex, H_ex
     return E_ex, H_ex

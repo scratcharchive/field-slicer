@@ -1,5 +1,6 @@
 import { BasePlugin, ExtensionContext, usePlugins } from 'labbox'
 import { FunctionComponent, useMemo } from "react"
+import { WorkspaceDispatch, WorkspaceState } from './workspaceReducer'
 import { WorkspaceRoute, WorkspaceRouteDispatch } from './WorkspaceRoute'
 import { WorkspaceViewPlugin } from './WorkspaceViewPlugin'
 export type { default as FieldModel } from './FieldModel'
@@ -8,10 +9,13 @@ export type { WorkspaceAction } from './workspaceReducer'
 export type { WorkspaceRoute, WorkspaceRouteDispatch } from './WorkspaceRoute'
 
 export type MainWindowProps = {
-    workspaceUri: string | undefined
+    workspace: WorkspaceState
+    workspaceDispatch: WorkspaceDispatch
     workspaceRoute: WorkspaceRoute
     workspaceRouteDispatch: WorkspaceRouteDispatch
     version: string
+    width?: number
+    height?: number
 }
 export interface MainWindowPlugin extends BasePlugin {
     type: 'MainWindow'
