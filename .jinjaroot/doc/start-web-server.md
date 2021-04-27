@@ -13,12 +13,9 @@ conda create -n {{ projectName }} python=3.8
 After activating the new environment (`conda activate {{ projectName }}`), install the following prerequisite packages:
 
 ```bash
-conda install -c conda-forge nodejs
+conda install nodejs -c conda-forge --repodata-fn=repodata.json
 npm install -g serve
 pip install {{ projectName }}
-
-# On macOS you may need to use the following to get a recent version of nodejs:
-# conda install nodejs -c conda-forge --repodata-fn=repodata.json
 ```
 
 Create a directory where temporary kachery files will be stored and set the KACHERY_STORAGE_DIR environment variable (if not set, `$HOME/kachery-storage` will be used):
@@ -26,17 +23,17 @@ Create a directory where temporary kachery files will be stored and set the KACH
 ```
 # This should be the full path to an existing directory.
 # For example, you could use: $HOME/kachery-storage
-export KACHERY_STORAGE_DIR="<your-chosen-tmp-file-directory>" 
+export KACHERY_STORAGE_DIR="your-chosen-tmp-file-directory" 
 ```
 
 Ensure that this environment variable is set with each new terminal session by adding the above line to your ~/.bashrc file.
 
-Open a new terminal and start a kachery-p2p daemon, selecting a `<node-label>` for display purposes:
+Open a new terminal and start a kachery-p2p daemon, selecting a node label for display purposes:
 
 ```
 # Make sure you are in the conda environment created above
 # and that the KACHERY_STORAGE_DIR env variable is set
-kachery-p2p-start-daemon --label <node-label>
+kachery-p2p-start-daemon --label your-chosen-node-label
 ```
 
 Keep this running. It allows communication between the Python script and the GUI. See below for more advanced configuration options, or see [kachery-p2p](https://github.com/flatironinstitute/kachery-p2p).
@@ -46,13 +43,15 @@ Keep this running. It allows communication between the Python script and the GUI
 Upgrade to the latest {{ projectName }} (it may be worth restarting the kachery daemon in case updates have been made to the kachery-p2p package):
 
 ```
+# In a different terminal from the kachery daemon
+# Make sure you are in the conda environment created above
 pip install --upgrade {{ projectName }}
 ```
 
 Now run the {{ projectName }} service:
 
 ```
-# First make sure you are in the conda environment
+# Make sure you are in the conda environment created above
 {{ projectName }}
 ```
 
