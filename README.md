@@ -13,6 +13,7 @@ View 3D surfaces and slices of 3D vector fields
 1. Install the package as above
 1. [Install docker](./doc/docker-installation.md)
 1. Clone this repository: `git clone https://github.com/flatironinstitute/field-slicer`
+1. Make sure you are in the appropriate conda environment
 
 Join the CCM test channel if not already joined (so that the test data can be downloaded):
 
@@ -23,6 +24,8 @@ kachery-p2p-join-channel https://gist.githubusercontent.com/magland/542b2ef7c268
 
 Run the example:
 ```bash
+# after cloning or updating this repo
+cd field-slicer
 cd examples
 python test_miniwasp.py
 ```
