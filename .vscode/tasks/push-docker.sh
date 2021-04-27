@@ -4,4 +4,4 @@
 
 set -ex
 
-docker push magland/field-slicer:0.1.12-dev1
+docker push magland/field-slicer:0.1.12

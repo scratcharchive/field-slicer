@@ -41,17 +41,17 @@ RUN git clone https://github.com/flatironinstitute/FMM3D /repos/FMM3D \
     && make install
 RUN cd /repos/FMM3D && make python
 
-# fmm3dbie - 4/21/21
+# fmm3dbie - 4/26/21
 RUN git clone https://gitlab.com/fastalgorithms/fmm3dbie /repos/fmm3dbie \
     && cd /repos/fmm3dbie \
-    && git checkout 8f8179f3c1949d48e2b2ac1962f76a111e554b9b \
+    && git checkout 02114d52e3d5798bac35c9cb256093c343092402 \
     && make install
 RUN cd /repos/fmm3dbie && make python
 
-# miniwasp - 4/21/21
+# miniwasp - 4/26/21
 RUN git clone https://github.com/mrachh/miniwasp /repos/miniwasp \
     && cd /repos/miniwasp \
-    && git checkout b133c681d2216ab526fc3f768ee8e21c97995613 \
+    && git checkout d35a77e8ab1460534b98ff1aa611384e6cc612fc \
     && make python
 
-LABEL version="0.1.0"
+LABEL version="0.1.1"

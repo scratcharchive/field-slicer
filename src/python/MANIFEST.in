@@ -1,1 +1,2 @@
 recursive-include field_slicer/build *
+recursive-include field_slicer/_devel/docker-miniwasp *

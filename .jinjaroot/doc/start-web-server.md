@@ -65,15 +65,15 @@ Open the web app in a browser at http://localhost:{{ clientPort }}.
 You can also set the following optional environment variables
 
 ```bash
-# KACHERY_P2P_CONFIG_DIR
-# This should correspond to the config directory being used by the kachery-p2p daemon
-# By default it is $HOME/.kachery-p2p
-export KACHERY_P2P_CONFIG_DIR="<Config directory for kachery-p2p>"
-
 # KACHERY_P2P_API_PORT
 # This should correspond to the port being used by the kachery-p2p daemon
 # By default it is {{ clientPort }}
 export KACHERY_P2P_API_PORT="<Port number used by kachery-p2p daemon>"
+
+# KACHERY_P2P_API_HOST
+# This should correspond to the host being used by the kachery-p2p daemon
+# By default it is localhost
+export KACHERY_P2P_API_HOST="<Host name used by kachery-p2p daemon>"
 ```
 
 See [kachery-p2p](https://github.com/flatironinstitute/kachery-p2p)
