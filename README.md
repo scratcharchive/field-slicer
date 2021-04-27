@@ -11,7 +11,7 @@ View 3D surfaces and slices of 3D vector fields
 ## Generating the miniwasp test data
 
 1. Install the package as above
-1. [Install docker](./doc/docker-installation)
+1. [Install docker](./doc/docker-installation.md)
 1. Clone this repository: `git clone https://github.com/flatironinstitute/field-slicer`
 
 Join the CCM test channel if not already joined (so that the test data can be downloaded):
