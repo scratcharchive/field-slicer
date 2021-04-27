@@ -4,7 +4,7 @@ Tested on Linux, should also run on macOS and Windows Subsystem for Linux.
 
 ## Prerequisites and kachery setup
 
-It is recommended that you start with a fresh conda environment with Python 3.8 or higher. For example:
+It is recommended that you start with a fresh [conda](https://docs.conda.io/projects/conda/en/latest/) environment with Python 3.8 or higher. For example:
 
 ```bash
 conda create -n {{ projectName }} python=3.8
