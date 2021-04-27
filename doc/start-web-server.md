@@ -22,7 +22,7 @@ pip install field-slicer
 # conda install nodejs -c conda-forge --repodata-fn=repodata.json
 ```
 
-Choose an existing directory where temporary kachery files will be stored and set the KACHERY_STORAGE_DIR environment variable (if not set, `$HOME/kachery-storage` will be used):
+Create a directory where temporary kachery files will be stored and set the KACHERY_STORAGE_DIR environment variable (if not set, `$HOME/kachery-storage` will be used):
 
 ```
 # This should be the full path to an existing directory.
